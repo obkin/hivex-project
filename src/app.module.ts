@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { WeatherModule } from './weather/weather.module';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
+import { LoggerService } from './logger/logger.service';
 
 @Module({
   imports: [
@@ -11,7 +12,7 @@ import { ConfigModule } from '@nestjs/config';
     WeatherModule,
     DatabaseModule,
   ],
+  providers: [AppService, LoggerService],
   controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

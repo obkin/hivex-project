@@ -1,27 +1,12 @@
 import { IsNumber } from 'class-validator';
 
-export class WeatherSaveDto {
+export class SaveWeatherDto {
   @IsNumber()
-  sunrise: number;
+  lat: number;
 
   @IsNumber()
-  sunset: number;
+  lon: number;
 
   @IsNumber()
-  temp: number;
-
-  @IsNumber()
-  feels_like: number;
-
-  @IsNumber()
-  pressure: number;
-
-  @IsNumber()
-  humidity: number;
-
-  @IsNumber()
-  uvi: number;
-
-  @IsNumber()
-  wind_speed: number;
+  part: number;
 }
