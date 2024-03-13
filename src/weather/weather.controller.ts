@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {
   Body,
   Controller,
@@ -24,9 +23,22 @@ export class WeatherController {
   @UsePipes(new ValidationPipe())
   async saveWeather(@Body() saveWeatherDto: SaveWeatherDto) {
     try {
-      return await this.weatherService.saveWeatherData(saveWeatherDto);
+      const res = await this.weatherService.saveWeatherData(saveWeatherDto);
+      if (res) {
+        this.loggerService.log(`[WeatherController]: weather saved`);
+        return res;
+      } else {
+        throw new HttpException(
+          'Failed to save weather data',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
     } catch (e) {
-      throw new HttpException('Failed to save weather data', HttpStatus.BAD_REQUEST);
+      this.loggerService.error(`[WeatherController] error: ${e.message}`);
+      throw new HttpException(
+        'Failed to save weather data',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 

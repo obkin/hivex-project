@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { SaveWeatherDto } from './dto/weather-save.dto';
 import { WeatherRepository } from './weather.repository';
 import { WeatherForecastDto } from './dto/weather-forecast.dto';
+import { LoggerService } from 'src/logger/logger.service';
 
 const mockOpenWatherData: WeatherForecastDto = {
   sunrise: 10,
@@ -16,14 +17,19 @@ const mockOpenWatherData: WeatherForecastDto = {
 
 @Injectable()
 export class WeatherService {
-  constructor(private readonly weatherRepository: WeatherRepository) {}
+  constructor(
+    private readonly loggerService: LoggerService,
+    private readonly weatherRepository: WeatherRepository,
+  ) {}
 
   async saveWeatherData(saveWeatherDto: SaveWeatherDto) {
     try {
       if (saveWeatherDto) {
-        await this.weatherRepository.saveWeather(mockOpenWatherData);
+        return await this.weatherRepository.saveWeather(mockOpenWatherData);
       }
-    } catch (e) {}
+    } catch (e) {
+      this.loggerService.error(`[WeatherService] error: ${e.message}`);
+    }
   }
 
   async getWeatherData() {}
