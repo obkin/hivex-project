@@ -8,7 +8,7 @@ enum WeatherPart {
   ALERTS = 'alerts',
 }
 
-export class SaveWeatherDto {
+export class GetWeatherDto {
   @IsNumber()
   lat: number;
 
