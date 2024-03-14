@@ -3,6 +3,7 @@ import { WeatherRepository } from './weather.repository';
 import { WeatherForecastDto } from './dto/weather-forecast.dto';
 import { LoggerService } from 'src/logger/logger.service';
 import axios, { AxiosResponse } from 'axios';
+import { GetWeatherDto } from './dto/weather-get.dto';
 
 @Injectable()
 export class WeatherService {
@@ -29,6 +30,7 @@ export class WeatherService {
         },
       );
       if (forecast) {
+        // console.log(forecast);
         return this.saveWeather(forecast);
       }
     } catch (e) {
@@ -36,20 +38,22 @@ export class WeatherService {
     }
   }
 
-  async saveWeather(weatherResponse: AxiosResponse<WeatherForecastDto>) {
+  async saveWeather(weatherResponse: AxiosResponse) {
     try {
-      const weatherData: WeatherForecastDto = weatherResponse.data;
+      const weatherData: WeatherForecastDto = await weatherResponse.data;
       return await this.weatherRepository.saveWeather(weatherData);
     } catch (e) {
       this.loggerService.error(`[WeatherService] error: ${e.message}`);
     }
   }
 
-  // async getWeatherData(getWeatherDto: GetWeatherDto) {
-  //   try {
-  //     const weather = await this.weatherRepository.getWeather();
-  //   } catch (e) {
-  //     this.loggerService.error(`[WeatherService] error: ${e.message}`);
-  //   }
-  // }
+  async getWeatherData(getWeatherDto: GetWeatherDto) {
+    try {
+      const weather = await this.weatherRepository.getWeather(getWeatherDto);
+      console.log(weather);
+      return weather;
+    } catch (e) {
+      this.loggerService.error(`[WeatherService] error: ${e.message}`);
+    }
+  }
 }

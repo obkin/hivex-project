@@ -10,7 +10,7 @@ export class ForecastEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('jsonb')
+  @Column('jsonb', { name: 'jsondata' })
   jsonData: Record<string, any>;
 
   @CreateDateColumn()

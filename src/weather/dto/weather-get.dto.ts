@@ -1,6 +1,6 @@
-import { IsIn, IsNumber } from 'class-validator';
+import { IsIn, IsString } from 'class-validator';
 
-enum WeatherPart {
+export enum WeatherPart {
   CURRENT = 'current',
   MINUTELY = 'minutely',
   HOURLY = 'hourly',
@@ -9,11 +9,11 @@ enum WeatherPart {
 }
 
 export class GetWeatherDto {
-  @IsNumber()
-  lat: number;
+  @IsString()
+  lat: string;
 
-  @IsNumber()
-  lon: number;
+  @IsString()
+  lon: string;
 
   @IsIn(Object.values(WeatherPart))
   part: string;
