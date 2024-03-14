@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Get,
   HttpException,
   HttpStatus,
   Post,
@@ -25,16 +24,15 @@ export class WeatherController {
     try {
       // eslint-disable-next-line prettier/prettier
       const savedData = await this.weatherService.getAndSaveForecastFromOpenWeather(saveWeatherDto);
-      return savedData;
-      // if (savedData) {
-      //   this.loggerService.log(`[WeatherController]: weather saved`);
-      //   return savedData;
-      // } else {
-      //   throw new HttpException(
-      //     'Failed to save weather data',
-      //     HttpStatus.BAD_REQUEST,
-      //   );
-      // }
+      if (savedData) {
+        this.loggerService.log(`[WeatherController]: weather saved`);
+        return savedData;
+      } else {
+        throw new HttpException(
+          'Failed to save weather data',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
     } catch (e) {
       this.loggerService.error(`[WeatherController] error: ${e.message}`);
       throw new HttpException(

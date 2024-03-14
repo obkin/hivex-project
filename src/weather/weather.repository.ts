@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { WeatherForecastDto } from './dto/weather-forecast.dto';
-import { GetWeatherDto } from './dto/weather-get.dto';
 import { ForecastEntity } from 'src/entities/forecast.entity';
 
 @Injectable()
@@ -24,19 +23,19 @@ export class WeatherRepository {
     }
   }
 
-  async getWeather(weatherLocation: GetWeatherDto) {
-    try {
-      return await this.repository.findOne({
-        where: {
-          // lat: weatherLocation.lat,
-          // lon: weatherLocation.lon,
-          // part: weatherLocation.part,
-        },
-      });
-    } catch (e) {
-      if (e instanceof Error) {
-        throw new Error(e.message);
-      }
-    }
-  }
+  // async getWeather(weatherLocation: GetWeatherDto) {
+  //   try {
+  //     return await this.repository.findOne({
+  //       where: {
+  //         // lat: weatherLocation.lat,
+  //         // lon: weatherLocation.lon,
+  //         // part: weatherLocation.part,
+  //       },
+  //     });
+  //   } catch (e) {
+  //     if (e instanceof Error) {
+  //       throw new Error(e.message);
+  //     }
+  //   }
+  // }
 }
