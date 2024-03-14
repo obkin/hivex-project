@@ -30,7 +30,6 @@ export class WeatherService {
         },
       );
       if (forecast) {
-        // console.log(forecast);
         return this.saveWeather(forecast);
       }
     } catch (e) {
@@ -50,8 +49,11 @@ export class WeatherService {
   async getWeatherData(getWeatherDto: GetWeatherDto) {
     try {
       const weather = await this.weatherRepository.getWeather(getWeatherDto);
-      console.log(weather);
-      return weather;
+      if (weather) {
+        return weather;
+      } else {
+        this.loggerService.error(`[WeatherService] error: weather not found`);
+      }
     } catch (e) {
       this.loggerService.error(`[WeatherService] error: ${e.message}`);
     }

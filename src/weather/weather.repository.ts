@@ -26,7 +26,7 @@ export class WeatherRepository {
 
   async getWeather({ lon, lat, part }: GetWeatherDto) {
     try {
-      console.log(part);
+      console.log(`part: ${part}`); // do not work yet
       return await this.repository
         .createQueryBuilder('forecast')
         .where(

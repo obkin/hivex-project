@@ -12,7 +12,6 @@ export class TransformInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     return next.handle().pipe(
       map((data) => {
-        console.log(data);
         return {
           sunrise: data.jsonData.sys.sunrise,
           sunset: data.jsonData.sys.sunset,

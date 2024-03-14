@@ -27,8 +27,10 @@ export class WeatherController {
   @UsePipes(new ValidationPipe())
   async saveWeather(@Body() saveWeatherDto: SaveWeatherDto) {
     try {
-      // eslint-disable-next-line prettier/prettier
-      const savedData = await this.weatherService.getAndSaveForecastFromOpenWeather(saveWeatherDto);
+      const savedData =
+        await this.weatherService.getAndSaveForecastFromOpenWeather(
+          saveWeatherDto,
+        );
       if (savedData) {
         this.loggerService.log(`[WeatherController]: weather saved`);
         return savedData;
@@ -48,27 +50,25 @@ export class WeatherController {
   }
 
   @Get('/get-weather')
-  @UseInterceptors(TransformInterceptor)
   @UsePipes(new ValidationPipe())
+  @UseInterceptors(TransformInterceptor)
   async getWeather(@Query() params: GetWeatherDto) {
     try {
       const weatherData = await this.weatherService.getWeatherData(params);
-      console.log(weatherData);
-      console.log(params);
       if (weatherData) {
         this.loggerService.log(`[WeatherController]: weather data sent`);
         return weatherData;
       } else {
         throw new HttpException(
           'Failed to get weather data',
-          HttpStatus.BAD_REQUEST,
+          HttpStatus.NOT_FOUND,
         );
       }
     } catch (e) {
       this.loggerService.error(`[WeatherController] error: ${e.message}`);
       throw new HttpException(
         'Failed to get weather data',
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        HttpStatus.NOT_FOUND,
       );
     }
   }
